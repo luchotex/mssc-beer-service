@@ -1,2 +1,4 @@
-# mssc-beer-service
-MSSC Beer Service
+# MSSC Beer Service
+
+Spring Boot Microservice example
+
