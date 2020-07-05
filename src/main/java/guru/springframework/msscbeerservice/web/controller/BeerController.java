@@ -17,14 +17,14 @@ import java.util.UUID;
  * @author Luis M. Kupferberg Ruiz (lkupferberg@overactive.com)
  * @created 2020-07-05 16:43
  */
-@RequestMapping("api/v1/beer")
+@RequestMapping("/api/v1/beer")
 @RestController
 public class BeerController {
 
   @GetMapping("/{beerId}")
   public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) {
     // TODO the impl
-    return new ResponseEntity(BeerDto.builder().id(UUID.randomUUID()), HttpStatus.OK);
+    return new ResponseEntity(BeerDto.builder().id(UUID.randomUUID()).build(), HttpStatus.OK);
   }
 
   @PostMapping
