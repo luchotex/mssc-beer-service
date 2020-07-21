@@ -7,6 +7,7 @@ import guru.springframework.msscbeerservice.web.mappers.BeerMapper;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPagedList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class BeerServiceImpl implements BeerService {
   private final BeerMapper beerMapper;
 
   @Override
+  @Cacheable(cacheNames = "beerCache", key = "#pbeerId", condition = "#showInventoryOnHand = false")
   public BeerDto getById(UUID beerId, boolean showInventoryOnHand) {
     return beerMapper.beerToBeerDto(
         beerRepository.findById(beerId).orElseThrow(NotFoundException::new), showInventoryOnHand);
@@ -49,6 +51,7 @@ public class BeerServiceImpl implements BeerService {
   }
 
   @Override
+  @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand = false ")
   public BeerPagedList listBeers(
       String beerName, String beerStyle, boolean showInventoryOnHand, Pageable pageable) {
     BeerPagedList beerPagedList;
