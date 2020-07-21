@@ -1,6 +1,8 @@
 package guru.springframework.msscbeerservice.services;
 
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerPagedList;
+import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
@@ -14,4 +16,6 @@ public interface BeerService {
   BeerDto create(BeerDto beerDto);
 
   BeerDto updateById(UUID beerId, BeerDto beerDto);
+
+  BeerPagedList listBeers(String beerName, String beerStyle, Pageable pageable);
 }
