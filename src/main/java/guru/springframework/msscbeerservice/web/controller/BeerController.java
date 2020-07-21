@@ -37,15 +37,19 @@ public class BeerController {
   public ResponseEntity<BeerPagedList> listBeers(
       @RequestParam(value = "beerName", required = false) String beerName,
       @RequestParam(value = "beerStyle", required = false) String beerStyle,
+      @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand,
       Pageable pageable) {
 
-    BeerPagedList beerList = beerService.listBeers(beerName, beerStyle, pageable);
+    BeerPagedList beerList =
+        beerService.listBeers(beerName, beerStyle, showInventoryOnHand, pageable);
     return new ResponseEntity<>(beerList, HttpStatus.OK);
   }
 
   @GetMapping("/{beerId}")
-  public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) {
-    return new ResponseEntity(beerService.getById(beerId), HttpStatus.OK);
+  public ResponseEntity<BeerDto> getBeerById(
+      @PathVariable("beerId") UUID beerId,
+      @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand) {
+    return new ResponseEntity(beerService.getById(beerId, showInventoryOnHand), HttpStatus.OK);
   }
 
   @PostMapping
