@@ -28,10 +28,19 @@ public class BeerServiceImpl implements BeerService {
   private final BeerMapper beerMapper;
 
   @Override
-  @Cacheable(cacheNames = "beerCache", key = "#pbeerId", condition = "#showInventoryOnHand = false")
+  @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand = false")
   public BeerDto getById(UUID beerId, boolean showInventoryOnHand) {
     return beerMapper.beerToBeerDto(
         beerRepository.findById(beerId).orElseThrow(NotFoundException::new), showInventoryOnHand);
+  }
+
+  @Override
+  @Cacheable(
+      cacheNames = "beerByUpcCache",
+      key = "#upc",
+      condition = "#showInventoryOnHand = false")
+  public BeerDto getByUpc(String upc, boolean showInventoryOnHand) {
+    return beerMapper.beerToBeerDto(beerRepository.findByUpc(upc), showInventoryOnHand);
   }
 
   @Override

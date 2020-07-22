@@ -26,14 +26,14 @@ import java.util.UUID;
  * @created 2020-07-05 16:43
  */
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1")
 @RestController
 @Valid
 public class BeerController {
 
   private final BeerService beerService;
 
-  @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+  @GetMapping(path = "/beer", produces = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<BeerPagedList> listBeers(
       @RequestParam(value = "beerName", required = false) String beerName,
       @RequestParam(value = "beerStyle", required = false) String beerStyle,
@@ -45,19 +45,26 @@ public class BeerController {
     return new ResponseEntity<>(beerList, HttpStatus.OK);
   }
 
-  @GetMapping("/{beerId}")
+  @GetMapping("/beer/{beerId}")
   public ResponseEntity<BeerDto> getBeerById(
       @PathVariable("beerId") UUID beerId,
       @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand) {
     return new ResponseEntity(beerService.getById(beerId, showInventoryOnHand), HttpStatus.OK);
   }
 
-  @PostMapping
+  @GetMapping("/beer-upc/{beerUpc}")
+  public ResponseEntity<BeerDto> getBeerByUpc(
+      @PathVariable("beerUpc") String beerUpc,
+      @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand) {
+    return new ResponseEntity(beerService.getByUpc(beerUpc, showInventoryOnHand), HttpStatus.OK);
+  }
+
+  @PostMapping(path = "/beer")
   public ResponseEntity create(@Valid @RequestBody BeerDto beerDto) {
     return new ResponseEntity(beerService.create(beerDto), HttpStatus.CREATED);
   }
 
-  @PutMapping("{beerId}")
+  @PutMapping("/beer/{beerId}")
   public ResponseEntity updateByBeerId(
       @PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDto beerDto) {
     return new ResponseEntity(beerService.updateById(beerId, beerDto), HttpStatus.NO_CONTENT);

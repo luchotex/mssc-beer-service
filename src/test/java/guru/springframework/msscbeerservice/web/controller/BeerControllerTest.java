@@ -44,6 +44,18 @@ class BeerControllerTest {
   }
 
   @Test
+  void getBeerByUpc_successfulTest() throws Exception {
+
+    String upc = "0083783375213";
+
+    given(beerService.getById(any(), anyBoolean())).willReturn(getValidBeerDto());
+
+    mockMvc
+        .perform(get("/api/v1/beer-upc/" + upc).accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+  }
+
+  @Test
   void create_successfulTest() throws Exception {
 
     BeerDto beerDto = getValidBeerDto();

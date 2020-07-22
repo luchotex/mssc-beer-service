@@ -13,6 +13,8 @@ import java.util.UUID;
 public interface BeerService {
   BeerDto getById(UUID beerId, boolean showInventoryOnHand);
 
+  BeerDto getByUpc(String upc, boolean showInventoryOnHand);
+
   BeerDto create(BeerDto beerDto);
 
   BeerDto updateById(UUID beerId, BeerDto beerDto);
