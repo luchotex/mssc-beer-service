@@ -7,7 +7,7 @@ import guru.springframework.msscbeerservice.web.model.BeerDto;
  * @created 2020-08-07 06:31
  */
 public class NewInventoryEvent extends BeerEvent {
-    NewInventoryEvent(BeerDto beerDto) {
-        super(beerDto);
-    }
+  public NewInventoryEvent(BeerDto beerDto) {
+    super(beerDto);
+  }
 }
